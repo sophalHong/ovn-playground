@@ -40,8 +40,8 @@ Vagrant.configure("2") do |config|
         vb.memory = server[:memory]
         vb.cpus = server[:cpus]
       end
-
-	  node.vm.provision "shell", inline: "systemctl status openvswitch ovn-controller --no-pager"
+	    
+      node.vm.provision "shell", inline: "systemctl status openvswitch ovn-controller --no-pager"
 
       if server[:name] == "control"
         node.vm.provision "shell", inline: <<-SHELL
@@ -51,12 +51,12 @@ Vagrant.configure("2") do |config|
         SHELL
       end
 
-	  node.vm.provision "shell", inline: <<-SHELL
-	    ovs-vsctl set open_vswitch . external_ids:ovn-remote=tcp:#{ovn_cfg[0][:ip]}:6642
-	    ovs-vsctl set open_vswitch . external_ids:ovn-encap-ip=#{server[:ip]}
-	    ovs-vsctl set open_vswitch . external_ids:ovn-encap-type=geneve
-	    ovs-vsctl set open_vswitch . external_ids:system-id=$(hostname)
-	    ovs-vsctl set open_vswitch . external_ids:hostname=$(hostname)
+      node.vm.provision "shell", inline: <<-SHELL
+        ovs-vsctl set open_vswitch . external_ids:ovn-remote=tcp:#{ovn_cfg[0][:ip]}:6642
+        ovs-vsctl set open_vswitch . external_ids:ovn-encap-ip=#{server[:ip]}
+        ovs-vsctl set open_vswitch . external_ids:ovn-encap-type=geneve
+        ovs-vsctl set open_vswitch . external_ids:system-id=$(hostname)
+        ovs-vsctl set open_vswitch . external_ids:hostname=$(hostname)
         
         echo "============================="
         echo "$ ovs-vsctl list open_vswitch"
@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
         echo "============================="
         echo "$ ovs-vsctl show"
         ovs-vsctl show
-	  SHELL
+      SHELL
     end
   end
 end
