@@ -6,21 +6,21 @@ ovn_cfg = [
      :name => "control",
      :autostart => true,
      :host_name  => "control.ovn.dev",
-     :ip => "192.168.33.30",
+     :ip => "192.168.56.30",
      :memory => 2048,
      :cpus => 2,
    },{
      :name => "compute1",
      :autostart => true,
      :host_name  => "compute1.ovn.dev",
-     :ip => "192.168.33.31",
+     :ip => "192.168.56.31",
      :memory => 2048,
      :cpus => 2,
    },{
      :name => "compute2",
      :autostart => true,
      :host_name  => "compute2.ovn.dev",
-     :ip => "192.168.33.32",
+     :ip => "192.168.56.32",
      :memory => 2048,
      :cpus => 2,
    },
@@ -52,11 +52,12 @@ Vagrant.configure("2") do |config|
       end
 
       node.vm.provision "shell", inline: <<-SHELL
-        ovs-vsctl set open_vswitch . external_ids:ovn-remote=tcp:#{ovn_cfg[0][:ip]}:6642
-        ovs-vsctl set open_vswitch . external_ids:ovn-encap-ip=#{server[:ip]}
-        ovs-vsctl set open_vswitch . external_ids:ovn-encap-type=geneve
-        ovs-vsctl set open_vswitch . external_ids:system-id=$(hostname)
-        ovs-vsctl set open_vswitch . external_ids:hostname=$(hostname)
+        ovs-vsctl set open_vswitch . \
+          external_ids:ovn-remote=tcp:#{ovn_cfg[0][:ip]}:6642 \
+          external_ids:ovn-encap-ip=#{server[:ip]} \
+          external_ids:ovn-encap-type=geneve \
+          external_ids:system-id=$(hostname) \
+          external_ids:hostname=$(hostname)
         
         echo "============================="
         echo "$ ovs-vsctl list open_vswitch"
