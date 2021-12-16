@@ -1,4 +1,4 @@
-# play-with-ovn
+# OVN-PlayGround
 This repository is created for OVN playground, which OVN v21.12.90 is already installed on vagrant box.  
 If you wish to get specific OVN version, please create your own one. [OVN-source](https://github.com/ovn-org/ovn)
 
