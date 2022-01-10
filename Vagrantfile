@@ -4,21 +4,18 @@ box = "itkh/ovn"
 ovn_cfg = [
     {
      :name => "control",
-     :autostart => true,
      :host_name  => "control.ovn.dev",
      :ip => "192.168.56.30",
      :memory => 2048,
      :cpus => 2,
    },{
      :name => "compute1",
-     :autostart => true,
      :host_name  => "compute1.ovn.dev",
      :ip => "192.168.56.31",
      :memory => 2048,
      :cpus => 2,
    },{
      :name => "compute2",
-     :autostart => true,
      :host_name  => "compute2.ovn.dev",
      :ip => "192.168.56.32",
      :memory => 2048,
