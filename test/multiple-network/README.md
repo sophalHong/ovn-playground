@@ -1,4 +1,4 @@
-# Two networks with one Router
+# Multiple networks - Two switchs with one Router
 ```
                                +--------------+
           |--------------------|   Router1    |--------------------|
