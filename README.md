@@ -7,7 +7,6 @@ If you wish to get specific OVN version, please create your own one. [OVN-source
 vagrant up
 ```
 This will create 3 node - control, compute1, compute2  
-All is set! you are good to test...
 
 ```
                              +-------------------+
@@ -25,7 +24,8 @@ All is set! you are good to test...
   |   192.168.56.31    |         Geneve tunnels        |   192.168.56.32    |
   +--------------------+                               +--------------------+
 ```
-  
+All is set! you are good to test...  
+
 ### Verifying OVN cluster
 - SSH connect to all node and change to root user
   ```bash
