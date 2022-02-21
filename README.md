@@ -3,11 +3,28 @@ This repository is created for OVN playground, which OVN v21.12.90 is already in
 If you wish to get specific OVN version, please create your own one. [OVN-source](https://github.com/ovn-org/ovn)
 
 ### Bring up OVN environment
-  ```bash
-  vagrant up
-  ```
-  This will create 3 node - control, compute1, compute2  
-  All is set! you are good to test...
+```bash
+vagrant up
+```
+This will create 3 node - control, compute1, compute2  
+All is set! you are good to test...
+
+```
+                             +-------------------+
+                             |      Control      |
+    Southbound Database      |   ovn-controller  |        Southbound Database
+             |-------------->|     ovn-northd    |<--------------|
+             |               |   ovsdb-servers   |               |
+             |               |   192.168.56.30   |               |
+             |               +-------------------+               |
+             |                     ||      ||                    |
+             |                     ||      ||                    |
+  +--------------------+           ||      ||          +--------------------+
+  |      Compute1      |==========//        \\=========|      Compute2      |
+  |   ovn-controller   |===============================|   ovn-controller   |
+  |   192.168.56.31    |         Geneve tunnels        |   192.168.56.32    |
+  +--------------------+                               +--------------------+
+```
   
 ### Verifying OVN cluster
 - SSH connect to all node and change to root user
