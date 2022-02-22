@@ -1,6 +1,41 @@
 # OVN-PlayGround
 This repository is created for OVN playground, which OVN v21.12.90 is already installed on vagrant box.  
 If you wish to get specific OVN version, please create your own one. [OVN-source](https://github.com/ovn-org/ovn)
+```
+                                         CMS
+                                          |
+                                          |
+                              +-----------|-----------+
+                              |           |           |
+                              |     OVN/CMS Plugin    |
+                              |           |           |
+                              |           |           |
+                              |   OVN Northbound DB   |
+                              |           |           |
+                              |           |           |
+                              |       ovn-northd      |
+                              |           |           |
+                              +-----------|-----------+
+                                          |
+                                          |
+                                +-------------------+
+                                | OVN Southbound DB |
+                                +-------------------+
+                                          |
+                                          |
+                       +------------------+------------------+
+                       |                  |                  |
+         HV 1          |                  |    HV n          |
+       +---------------|---------------+  .  +---------------|---------------+
+       |               |               |  .  |               |               |
+       |        ovn-controller         |  .  |        ovn-controller         |
+       |         |          |          |  .  |         |          |          |
+       |         |          |          |     |         |          |          |
+       |  ovs-vswitchd   ovsdb-server  |     |  ovs-vswitchd   ovsdb-server  |
+       |                               |     |                               |
+       +-------------------------------+     +-------------------------------+
+
+```
 
 ### Bring up OVN environment
 ```bash
@@ -10,7 +45,7 @@ This will create 3 node - control, compute1, compute2
 
 ```
                              +-------------------+
-                             |      Control      |
+                             |      Central      |
     Southbound Database      |   ovn-controller  |        Southbound Database
              |-------------->|     ovn-northd    |<--------------|
              |               |   ovsdb-servers   |               |
