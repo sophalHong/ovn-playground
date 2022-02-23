@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/bash -e
+
+[[ "$EUID" -ne 0 ]] && { echo "Please run as root!"; exit; }
 
 # Create the first logical switch and its two ports.
 ovn-nbctl ls-add sw0
@@ -36,9 +38,9 @@ ovn-nbctl lsp-add sw1 sw1-lrp1 \
     options:router-port=lrp1 addresses='"00:00:00:00:ff:02"'
 
 # Trace
-ovn-trace --minimal sw0 'inport == "sw0-port1" && eth.src == 00:00:00:00:00:01 && ip4.src == 10.0.0.51 && eth.dst == 00:00:00:00:ff:01 && ip4.dst == 192.168.1.52 && ip.ttl == 32'                                
-ovn-trace --summary sw0 'inport == "sw0-port1" && eth.src == 00:00:00:00:00:01 && ip4.src == 10.0.0.51 && eth.dst == 00:00:00:00:ff:01 && ip4.dst == 192.168.1.52 && ip.ttl == 32'                                
-ovn-trace --detailed sw0 'inport == "sw0-port1" && eth.src == 00:00:00:00:00:01 && ip4.src == 10.0.0.51 && eth.dst == 00:00:00:00:ff:01 && ip4.dst == 192.168.1.52 && ip.ttl == 32'                               
-#ovn-trace --detailed 1db2e778-03b3-4cd0-965a-7ed9132b7c4a 'inport == "eb8c0275-01d6-4851-b397-84c26f384ef1" && eth.src == 56:6f:1b:f4:00:06 && ip4.src == 10.0.0.3 && eth.dst == 56:6f:1b:f4:00:07 && ip4.dst == 10.0.0.4 && ip.ttl == 32'
-#ovn-trace --summary 1db2e778-03b3-4cd0-965a-7ed9132b7c4a 'inport == "eb8c0275-01d6-4851-b397-84c26f384ef1" && eth.src == 56:6f:1b:f4:00:06 && eth.dst == 56:6f:1b:f4:00:07'                                       
-#ovn-trace --detailed $sw 'inport == '"\"$port\""' && eth.src == '"$src"' && eth.dst == '"$dst"''
+echo "-------------------------------Minimal-----------------------------------------"
+ovn-trace --minimal sw0 'inport == "sw0-port1" && eth.src == 00:00:00:00:00:01 && ip4.src == 10.0.0.51 && eth.dst == 00:00:00:00:ff:01 && ip4.dst == 192.168.1.52 && ip.ttl == 32'
+echo "-------------------------------Summary-----------------------------------------"
+ovn-trace --summary sw0 'inport == "sw0-port1" && eth.src == 00:00:00:00:00:01 && ip4.src == 10.0.0.51 && eth.dst == 00:00:00:00:ff:01 && ip4.dst == 192.168.1.52 && ip.ttl == 32'
+echo "-------------------------------Detailed----------------------------------------"
+ovn-trace --detailed sw0 'inport == "sw0-port1" && eth.src == 00:00:00:00:00:01 && ip4.src == 10.0.0.51 && eth.dst == 00:00:00:00:ff:01 && ip4.dst == 192.168.1.52 && ip.ttl == 32'
