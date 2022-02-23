@@ -1,12 +1,12 @@
-# Testing DHCP OVN-controller
+# Testing DHCP OVN Network
 
-### Creating a Virtual network (on control node)
+### Creating a Virtual network (on central node)
 - Create a logical switch
   ```bash
   ovn-nbctl ls-add net0  
   ```
   ```bash
-  [root@control ~]# ovn-nbctl show
+  [root@central ~]# ovn-nbctl show
   switch fa15873d-e015-452c-b60c-9259b3f47416 (net0)
   ```
   
@@ -17,7 +17,7 @@
     other_config:exclude_ips="10.0.0.1..10.0.0.10"
   ```  
   ```bash
-  [root@control ~]# ovn-nbctl --column name,other_config list logical_switch net0
+  [root@central ~]# ovn-nbctl --column name,other_config list logical_switch net0
   name                : net0
   other_config        : {exclude_ips="10.0.0.1..10.0.0.10", subnet="10.0.0.0/24"}  
   ```
@@ -33,7 +33,7 @@
     server_mac=c0:ff:ee:00:00:01
   ```
   ```bash
-  [root@control ~]# ovn-nbctl list dhcp_options
+  [root@central ~]# ovn-nbctl list dhcp_options
   _uuid               : 07b6bcda-e3b2-44b9-91c7-0eb3f66c6881
   cidr                : "10.0.0.0/24"
   external_ids        : {}
@@ -59,7 +59,7 @@
   To set static IP, `ovn-nbctl lsp-set-addresses port1 "c0:ff:ee:00:00:11 10.0.0.11"`
   
   ```bash
-  [root@control ~]# ovn-nbctl show
+  [root@central ~]# ovn-nbctl show
   switch fa15873d-e015-452c-b60c-9259b3f47416 (net0)
       port port3
           addresses: ["c0:ff:ee:00:00:13 dynamic"]
@@ -73,7 +73,7 @@
 
 ### Simulating a DHCP request with ovn-trace
 ```bash
-[root@control ~]# ovn-trace --summary net0 'inport=="port1" && eth.src==c0:ff:ee:00:00:11 && ip4.src==0.0.0.0 && ip.ttl==1 && ip4.dst==255.255.255.255 && udp.src==68 && udp.dst==67'
+[root@central ~]# ovn-trace --summary net0 'inport=="port1" && eth.src==c0:ff:ee:00:00:11 && ip4.src==0.0.0.0 && ip.ttl==1 && ip4.dst==255.255.255.255 && udp.src==68 && udp.dst==67'
 # udp,reg14=0x1,vlan_tci=0x0000,dl_src=c0:ff:ee:00:00:11,dl_dst=00:00:00:00:00:00,nw_src=0.0.0.0,nw_dst=255.255.255.255,nw_tos=0,nw_ecn=0,nw_ttl=1,tp_src=68,tp_dst=67
 ingress(dp="net0", inport="port1") {
     next;
@@ -105,7 +105,7 @@ ingress(dp="net0", inport="port1") {
   ```
   check the result with `ovs-vsctl show`, find `Port "port1"`
     
-  On control host, OVN should also be aware of this port.  
+  On central host, OVN should also be aware of this port.  
   Run `ovn-sbctl show` find `Port_Binding port1`
 
 ### Configure the port using DHCP
@@ -181,15 +181,15 @@ ingress(dp="net0", inport="port1") {
   
 - Verifying which port are binded to which host
   ```bash
-  [root@control ~]# ovn-sbctl show
+  [root@central ~]# ovn-sbctl show
   Chassis compute2.ovn.dev
       hostname: compute2.ovn.dev
       Encap geneve
           ip: "192.168.33.32"
           options: {csum="true"}
       Port_Binding port3
-  Chassis control.ovn.dev
-      hostname: control.ovn.dev
+  Chassis central.ovn.dev
+      hostname: central.ovn.dev
       Encap geneve
           ip: "192.168.33.30"
           options: {csum="true"}

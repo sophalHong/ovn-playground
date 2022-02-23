@@ -18,7 +18,7 @@
 +---------------------+                                 +---------------------+
 ```
 
-### Network setting on OVN Controller node
+### Network setting on OVN Central node
 * Create two logical switches
 ```bash
 ovn-nbctl ls-add network1
@@ -136,7 +136,7 @@ Let's now check with ovn-trace how the flow of a packet from VM1 to VM2 looks li
 ovn-trace --summary network1 'inport == "vm1" && eth.src == 40:44:00:00:00:01 && eth.dst == 40:44:00:00:00:03 && ip4.src == 192.168.0.11 && ip4.dst == 192.168.1.11 && ip.ttl == 64'
 ```
 ```bash
-[root@control ~]# ovn-trace --summary network1 'inport == "vm1" && eth.src == 40:44:00:00:00:01 && eth.dst == 40:44:00:00:00:03 && ip4.src == 192.168.0.11 && ip4.dst == 192.168.1.11 && ip.ttl == 64'
+[root@central ~]# ovn-trace --summary network1 'inport == "vm1" && eth.src == 40:44:00:00:00:01 && eth.dst == 40:44:00:00:00:03 && ip4.src == 192.168.0.11 && ip4.dst == 192.168.1.11 && ip.ttl == 64'
 # ip,reg14=0x1,vlan_tci=0x0000,dl_src=40:44:00:00:00:01,dl_dst=40:44:00:00:00:03,nw_src=192.168.0.11,nw_dst=192.168.1.11,nw_proto=0,nw_tos=0,nw_ecn=0,nw_ttl=64
 ingress(dp="network1", inport="vm1") {
     next;

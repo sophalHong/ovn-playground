@@ -3,8 +3,8 @@
 box = "itkh/ovn"
 ovn_cfg = [
     {
-     :name => "control",
-     :host_name  => "control.ovn.dev",
+     :name => "central",
+     :host_name  => "central.ovn.dev",
      :ip => "192.168.56.30",
      :memory => 2048,
      :cpus => 2,
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 	    
       node.vm.provision "shell", inline: "systemctl status openvswitch ovn-controller --no-pager"
 
-      if server[:name] == "control"
+      if server[:name] == "central"
         node.vm.provision "shell", inline: <<-SHELL
           systemctl enable --now ovn-northd
           systemctl status ovn-northd --no-pager

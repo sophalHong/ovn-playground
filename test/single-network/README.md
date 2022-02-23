@@ -14,7 +14,7 @@
 +---------------------+                                 +---------------------+
 ```
 
-* Create Logical switch 'network1' and 2 ports (on OVN-controller node)
+* Create Logical switch 'network1' and 2 ports (on central node)
 ```bash
 ovn-nbctl ls-add network1
 ovn-nbctl lsp-add network1 vm1
@@ -25,7 +25,7 @@ ovn-nbctl lsp-set-addresses vm2 "40:44:00:00:00:02 192.168.0.12"
 
 * Check result 
 ```bash
-[root@control ~]# ovn-nbctl show
+[root@central ~]# ovn-nbctl show
 switch 7efc2cce-8f80-4e70-8549-b59d6d390d28 (network1)
     port vm2
         addresses: ["40:44:00:00:00:02 192.168.0.12"]
@@ -33,9 +33,9 @@ switch 7efc2cce-8f80-4e70-8549-b59d6d390d28 (network1)
         addresses: ["40:44:00:00:00:01 192.168.0.11"]
 ```
 ```bash
-[root@control ~]# ovn-sbctl show
-Chassis control.ovn.dev
-    hostname: control.ovn.dev
+[root@central ~]# ovn-sbctl show
+Chassis central.ovn.dev
+    hostname: central.ovn.dev
     Encap geneve
         ip: "192.168.56.30"
         options: {csum="true"}
@@ -79,9 +79,9 @@ ip netns exec vm2 ip a
 
 * Checking agian the Southbound database, we should see the port binding status
 ```bash
-[root@control ~]# ovn-sbctl show
-Chassis control.ovn.dev
-    hostname: control.ovn.dev
+[root@central ~]# ovn-sbctl show
+Chassis central.ovn.dev
+    hostname: central.ovn.dev
     Encap geneve
         ip: "192.168.56.30"
         options: {csum="true"}

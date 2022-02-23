@@ -41,7 +41,7 @@ If you wish to get specific OVN version, please create your own one. [OVN-source
 ```bash
 vagrant up
 ```
-This will create 3 node - control, compute1, compute2  
+This will create 3 node - central, compute1, compute2
 
 ```
                              +-------------------+
@@ -64,7 +64,7 @@ All is set! you are good to test...
 ### Verifying OVN cluster
 - SSH connect to all node and change to root user
   ```bash
-  vagrant ssh control # {compute1, compute2}
+  vagrant ssh central # {compute1, compute2}
   sudo -i
   ```
 
@@ -75,7 +75,7 @@ All is set! you are good to test...
   ```
   
   ```bash
-  [root@control ~]# ovs-vsctl show
+  [root@central ~]# ovs-vsctl show
   8637ba85-8d8a-4510-81cf-c56edf555c7c
     Bridge br-int
         fail_mode: secure
