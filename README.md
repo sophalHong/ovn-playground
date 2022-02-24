@@ -98,6 +98,7 @@ All is set! you are good to test...
 * [A single network - One logical switch](test/single-network)
 * [Multiple network - Two logical switches with one logical router](test/multiple-network)
 * [DHCP - Assign dynamic ip address](test/dhcp-dynamic)
+* [OVN Trace](test/ovn-trace)
   
 ### References
 - https://blog.oddbit.com/post/2019-12-19-ovn-and-dhcp/
